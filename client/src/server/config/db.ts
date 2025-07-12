@@ -11,11 +11,9 @@ function connect() {
   client.connect();
   db = client.db("procurement");
 }
-
-
-export function getDB () {
-    if (!db) {
-        connect();
-    }
-    return db;
+export function getDB() {
+  if (!db) {
+    connect();
+  }
+  return db;
 }

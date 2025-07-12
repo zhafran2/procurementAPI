@@ -3,6 +3,7 @@ import { getDB } from "../config/db";
 import { IUser, loginUser } from "../interfaces/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { ObjectId } from "mongodb";
 const userSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters long"),
   email: z.string().email("Invalid email address"),
@@ -65,6 +66,14 @@ export default class UserModel {
     const secret = process.env.JWT_SECRET as string;
     const access_token = jwt.sign(userToken, secret);
 
-    return access_token
+    return access_token;
+  }
+  static async userById(id: string) {
+    const collection = this.getCollection();
+    const user = await collection.findOne({ _id: new ObjectId(id) });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
   }
 }

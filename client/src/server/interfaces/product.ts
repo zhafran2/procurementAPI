@@ -6,7 +6,7 @@ export interface IProduct {
   price: number;
   unit: string; // pcs, kg, meter, etc.
   stock: number;
-  images?: string[]; // array of image URLs
+  images?: string; // array of image URLs
   specifications?: Record<string, any>; // flexible object for product specs
   status: "active" | "inactive";
   createdAt: string;
@@ -21,7 +21,7 @@ export interface IProductCreate {
   price: number;
   unit: string; // pcs, kg, meter, etc.
   stock: number;
-  images?: string[]; // array of image URLs
+  images?: string; // array of image URLs
   specifications?: Record<string, any>; // flexible object for product specs
 }
 
@@ -32,7 +32,7 @@ export interface IProductUpdate {
   price?: number;
   unit?: string; // pcs, kg, meter, etc.
   stock?: number;
-  images?: string[]; // array of image URLs
+  images?: string; // array of image URLs
   specifications?: Record<string, any>; // flexible object for product specs
   status?: "active" | "inactive";
 }
