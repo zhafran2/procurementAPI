@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 export interface IVendor {
-  userId: string; // reference to User._id
+  userId: ObjectId; // reference to User._id
   companyName: string;
   companyAddress: string;
   contactPerson: string;
@@ -12,6 +12,7 @@ export interface IVendor {
   updatedAt: string;
 }
 export interface IVendorCreate {
+  userId: ObjectId
     companyName: string;
     companyAddress: string;         
     contactPerson: string;

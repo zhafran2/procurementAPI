@@ -10,6 +10,12 @@ export interface IUser {
   updatedAt: string;
 }
 
+export interface User {
+  email: string;
+  password: string; // hashed password
+  username: string;
+  role: "admin" | "vendor" | "buyer";
+}
 export interface registerUser {
   username: string;
   email: string;

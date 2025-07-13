@@ -1,12 +1,15 @@
-import { IUser } from "@/server/interfaces/user";
+import { IUser, User } from "@/server/interfaces/user";
 import UserModel from "@/server/models/users";
 import { ZodError } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const payload: IUser = await req.json();
+    const payload: User = await req.json();
     const newUser = await UserModel.registerUser(payload);
-    return new Response(JSON.stringify(newUser), { status: 201 });
+
+    console.log(newUser,"JJJJJ");
+    
+    return Response.json(newUser, { status: 201 });
   } catch (err: unknown) {
     if (err instanceof ZodError) {
       const issues = err.issues;
