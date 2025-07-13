@@ -1,6 +1,6 @@
 import z from "zod";
 import { getDB } from "../config/db";
-import { IUser, loginUser } from "../interfaces/user";
+import { IUser, loginUser, User } from "../interfaces/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
@@ -19,24 +19,23 @@ const loginSchema = z.object({
 export default class UserModel {
   static getCollection() {
     const db = getDB();
-    const collection = db.collection("users");
+    const collection = db.collection<User>("users");
     return collection;
   }
 
-  static async registerUser(payload: IUser) {
+  static async registerUser(payload: User) {
     userSchema.parse(payload);
     const collection = this.getCollection();
     const { username, email, password, role } = payload;
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = bcrypt.hashSync(password);
     const user = {
       username,
       email,
       password: hashedPassword,
       role,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     };
     const newUser = await collection.insertOne(user);
+    
     return newUser;
   }
 

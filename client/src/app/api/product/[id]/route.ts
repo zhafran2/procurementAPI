@@ -22,7 +22,7 @@ export async function PUT(req: Request, { params }: detail) {
     const { id } = await params;
     const body = await req.json();
 
-    const product = await ProductModel.updateVendor(body, id);
+    const product = await ProductModel.updateProduct(body, id);
 
     return Response.json({ product }, { status: 200 });
   } catch (err: unknown) {

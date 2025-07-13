@@ -6,7 +6,7 @@ import { IVendorUpdate } from "../interfaces/vendor";
 export default class ProductModel {
   static getCollection() {
     const db = getDB();
-    const collection = db.collection("products");
+    const collection = db.collection<IProduct>("products");
     return collection;
   }
 
@@ -47,7 +47,9 @@ export default class ProductModel {
     // Fetch and return the inserted document using the insertedId
     return await collection.findOne({ _id: result.insertedId });
   }
-  static async updateVendor(payload: IVendorUpdate, vendorId: string) {
+  // This method should update a vendor, not a product; move it to the VendorModel if needed.
+  // If you intend to update a product, use IProductUpdate and ensure status matches IProduct's type.
+  static async updateProduct(payload: IProductUpdate, vendorId: string) {
     const collection = this.getCollection();
     const result = await collection.updateOne(
         { _id: new ObjectId(vendorId) },
@@ -64,5 +66,11 @@ export default class ProductModel {
 static async deleteProduct(id: string) {
     const collection = this.getCollection();
     return await collection.deleteOne({ _id: new ObjectId(id) });
+}
+
+static async allProducts() {
+  const collection = this.getCollection()
+  const products = await collection.find().toArray();
+  return products;
 }
 }
